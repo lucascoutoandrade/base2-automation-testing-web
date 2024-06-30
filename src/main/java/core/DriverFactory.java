@@ -21,13 +21,14 @@ public class DriverFactory {
 	private static Enum nomeNavegador;
 	public static Logger log = Logger.getLogger("QALogger");
 	private static Properties prop = ConfigFileReader.getProp();
+	private static String osName = System.getProperty("os.name").toLowerCase();
+	private static String driverName;
 
 	public static void openBrowser(Enum navegador, String URL) {
 		nomeNavegador = navegador;
 		getDriver().get(URL);
 
 	}
-	
 
 	public static WebDriver getDriver() {
 		if (driver == null) {
@@ -48,18 +49,19 @@ public class DriverFactory {
 
 		case "CHROME":
 			try {
-				WebDriverManager.chromedriver().operatingSystem(OperatingSystem.LINUX).setup();
+
+				setOSWebDriverSetup();
 				ChromeOptions chromeOptions = new ChromeOptions();
 				chromeOptions.addArguments("--remote-allow-origins=*");
 				chromeOptions.addArguments("--start-maximized");
 				driver = new ChromeDriver(chromeOptions);
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-				log.info("Chrome Driver selecionado");
+				log.info("Selected Chrome Driver");
 			} catch (Throwable e) {
 				log.info("ERRO: " + e.getMessage());
 			}
 			break;
-			
+
 		case "HEADLESS":
 
 			try {
@@ -70,27 +72,27 @@ public class DriverFactory {
 				chromeOptionsHeadless.addArguments("window-size=1280x1024");
 				driver = new ChromeDriver(chromeOptionsHeadless);
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-				log.info("Chrome Headless Driver selecionado");
+				log.info("Selected Chrome Headless Driver");
 			} catch (Throwable e) {
 				log.info("ERRO: " + e.getMessage());
 			}
 			break;
-			
+
 		case "FIREFOX":
 			try {
-				WebDriverManager.firefoxdriver().setup();
+				setOSWebDriverSetup();
 				driver = new FirefoxDriver();
 				driver.manage().window().maximize();
-				log.info("Gecko Driver selecionado");
+				log.info("Selected Gecko Driver");
 			} catch (Throwable e) {
 				log.info("ERRO: " + e.getMessage());
 			}
 
 			break;
-			
+
 		case "INTERNET_EXPLORER":
 			try {
-				WebDriverManager.iedriver().setup();
+				setOSWebDriverSetup();
 				driver = new InternetExplorerDriver();
 				driver.manage().window().maximize();
 				DesiredCapabilities capabilitiesIE = new DesiredCapabilities();
@@ -101,23 +103,72 @@ public class DriverFactory {
 				capabilitiesIE.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
 						true);
 				capabilitiesIE.setCapability(InternetExplorerDriver.FORCE_CREATE_PROCESS, true);
-				log.info("Internet Explorer Driver selecionado");
+				log.info("Selected Internet Explorer Driver");
 
 			} catch (Throwable e) {
 				log.info("ERRO: " + e.getMessage());
 			}
 
 		default:
-			log.warning(">>>>>>> ATENÇÃO SEU NAVEGADOR NÃO ESTÁ DISPONÍVEL! <<<<<<<<<<");
+			log.warning(">>>>>>> Warning browser not available! <<<<<<<<<<");
 		}
+	}
+
+	/**
+	 * Way to OS
+	 */
+
+	public static void setOSWebDriverSetup() {
+
+		// Operating system is based on Linux/Unix/*AIX
+		if (osName.contains("linux") || osName.contains("unix") || osName.contains("aix")) {
+
+			setSetupDriver();
+			// Operating system is Apple OSX based
+		} else if (osName.contains("mac") || osName.contains("osx")) {
+
+			setSetupDriver();
+			// Operating system is based on Windows
+		} else {
+
+			setSetupDriver();
+		}
+
+	}
+
+	/**
+	 * Setup driver
+	 */
+
+	public static void setSetupDriver() {
+
+		switch (driverName.toLowerCase()) {
+
+		case "chrome":
+			WebDriverManager.chromedriver().operatingSystem(OperatingSystem.LINUX).setup();
+			break;
+		case "firefox":
+			WebDriverManager.firefoxdriver().operatingSystem(OperatingSystem.LINUX).setup();
+			break;
+		case "ie":
+			WebDriverManager.iedriver().operatingSystem(OperatingSystem.LINUX).setup();
+			break;
+
+		default:
+			log.warning(">>>>>>> Warning browser not available! <<<<<<<<<<");
+
+		}
+
 	}
 
 	/**
 	 * Define browser
 	 */
 	public static String setBrowser() {
-		
-		if (prop.getProperty("browser") != null) {
+
+		driverName = prop.getProperty("browser");
+
+		if (driverName != null) {
 			return prop.getProperty("browser");
 		} else {
 			return nomeNavegador.name();
@@ -136,7 +187,7 @@ public class DriverFactory {
 
 		}
 	}
-	
+
 	/**
 	 * close driver
 	 */
