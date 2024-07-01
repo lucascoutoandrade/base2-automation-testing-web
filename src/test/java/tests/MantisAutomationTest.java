@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.Properties;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -10,13 +12,15 @@ import pages.HomePage;
 import pages.IssueDetailsPage;
 import pages.LoginPage;
 import pages.ViewIssuePage;
+import utils.ConfigFileReader;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class MantisAutomationTest extends BaseTest {
-
-	public final String username = "Lucas_Andrade";
-	public final String password = "1234";
+	
+	private static Properties prop = ConfigFileReader.getProp();
+	public final String username = prop.getProperty("username");
+	public final String password = prop.getProperty("password");
 	private LoginPage loginPage = new LoginPage();
 	private HomePage homePage = new HomePage();
 	private IssueDetailsPage issueDetailsPage = new IssueDetailsPage();

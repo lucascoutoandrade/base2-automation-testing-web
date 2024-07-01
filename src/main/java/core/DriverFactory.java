@@ -3,14 +3,12 @@ package core;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import io.github.bonigarcia.wdm.OperatingSystem;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import utils.ConfigFileReader;
@@ -118,7 +116,7 @@ public class DriverFactory {
 	 * Way to OS
 	 */
 
-	public static void setOSWebDriverSetup() {
+	private static void setOSWebDriverSetup() {
 
 		// Operating system is based on Linux/Unix/*AIX
 		if (osName.contains("linux") || osName.contains("unix") || osName.contains("aix")) {
@@ -140,7 +138,7 @@ public class DriverFactory {
 	 * Setup driver
 	 */
 
-	public static void setSetupDriver() {
+	private static void setSetupDriver() {
 
 		switch (driverName.toLowerCase()) {
 
@@ -164,7 +162,7 @@ public class DriverFactory {
 	/**
 	 * Define browser
 	 */
-	public static String setBrowser() {
+	private static String setBrowser() {
 
 		driverName = prop.getProperty("browser");
 
