@@ -15,6 +15,14 @@ public class HomePage extends BasePage {
 	@FindBy(xpath = "//a[contains(text(),'Logout')]")
 	WebElement logoutButton;
 	
+	@FindBy(xpath = "//a[@class='btn btn-primary btn-sm']")
+	WebElement reportIssueButton;
+	
+	@FindBy(xpath = "//i[@class='menu-icon fa fa-list-alt']")
+	WebElement viewIssueButton;
+	
+	
+	
 	
 	public HomePage() {
 
@@ -32,6 +40,16 @@ public class HomePage extends BasePage {
 
 		click(logoutButton);
 
+	}
+	
+	public void clickOnReporterIssueButton() {
+		
+		click(reportIssueButton);
+	}
+	
+public void clickOnViewIssueButton() {
+		
+		click(viewIssueButton);
 	}
 
 }

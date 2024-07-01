@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 public class BasePage {
@@ -29,6 +30,24 @@ public class BasePage {
 		log.info("text: " + text + " filled successfully!");
 		return this;
 
+	}
+	
+	public BasePage selectByText(WebElement el, String text) {
+		
+		Select select  = new Select(el);
+		select.selectByVisibleText(text);
+		log.info("text:"+text+" selected successfully!");
+		return this;
+		
+	}
+	
+public BasePage selectByValue(WebElement el, String value) {
+		
+		Select select  = new Select(el);
+		select.selectByValue(value);
+		log.info("value:"+value+" selected successfully!");
+		return this;
+		
 	}
 
 	public BasePage click(WebElement el) {
