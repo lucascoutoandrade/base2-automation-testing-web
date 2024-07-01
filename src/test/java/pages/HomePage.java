@@ -14,16 +14,19 @@ public class HomePage extends BasePage {
 
 	@FindBy(xpath = "//a[contains(text(),'Logout')]")
 	WebElement logoutButton;
-	
+
 	@FindBy(xpath = "//a[@class='btn btn-primary btn-sm']")
 	WebElement reportIssueButton;
-	
+
 	@FindBy(xpath = "//i[@class='menu-icon fa fa-list-alt']")
 	WebElement viewIssueButton;
-	
-	
-	
-	
+
+	@FindBy(xpath = "//span[contains(text(),'Change Log')]")
+	WebElement changeLogButton;
+
+	@FindBy(xpath = "//span[contains(text(),'Roadmap')]")
+	WebElement roadMapButton;
+
 	public HomePage() {
 
 		PageFactory.initElements(DriverFactory.getDriver(), this);
@@ -41,15 +44,25 @@ public class HomePage extends BasePage {
 		click(logoutButton);
 
 	}
-	
+
 	public void clickOnReporterIssueButton() {
-		
+
 		click(reportIssueButton);
 	}
-	
-public void clickOnViewIssueButton() {
-		
+
+	public void clickOnViewIssueButton() {
+
 		click(viewIssueButton);
+	}
+	
+	public void clickOnChangeLogButton() {
+
+		click(changeLogButton);
+	}
+	
+	public void clickOnRoadmapButton() {
+
+		click(roadMapButton);
 	}
 
 }

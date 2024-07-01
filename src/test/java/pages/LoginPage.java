@@ -11,7 +11,7 @@ import core.BasePage;
 import core.DriverFactory;
 
 public class LoginPage extends BasePage {
-	
+
 	public Logger log = Logger.getLogger("QALogger");
 
 	@FindBy(id = "username")
@@ -25,6 +25,11 @@ public class LoginPage extends BasePage {
 
 	@FindBy(xpath = "//input[@name='bug_id']")
 	WebElement isHome;
+	
+	@FindBy(css="div.alert:nth-child(4) > p:nth-child(1)")
+	WebElement loginMsgError;
+	
+	
 
 	public LoginPage() {
 
@@ -50,9 +55,16 @@ public class LoginPage extends BasePage {
 
 	}
 
-	public void waitHomePageLoaded() {
+	public boolean waitHomePageLoaded() {
 
-		waitElementVisible(isHome, 20);
+		try {
+
+			waitElementVisible(isHome, 20);
+			return true;
+		} catch (Exception e) {
+			return false;
+
+		}
 	}
 
 	public boolean isLoginPage() {
@@ -61,14 +73,20 @@ public class LoginPage extends BasePage {
 
 			waitElementVisible(username, 05);
 			return true;
-			
+
 		} catch (NoSuchElementException e) {
-			
-			log.warning("ERROR: "+e.getLocalizedMessage());
+
+			log.warning("ERROR: " + e.getLocalizedMessage());
 			return false;
 
 		}
 
+	}
+	
+	public String getLoginMsgError() {
+		
+		return loginMsgError.getText();
+		
 	}
 
 }

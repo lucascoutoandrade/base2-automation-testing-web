@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import pages.ChangeLogPage;
 import pages.HomePage;
 import pages.IssueDetailsPage;
 import pages.LoginPage;
+import pages.RoadMapPage;
 import pages.ViewIssuePage;
 import utils.ConfigFileReader;
 
@@ -25,6 +27,8 @@ public class MantisAutomationTest extends BaseTest {
 	private HomePage homePage = new HomePage();
 	private IssueDetailsPage issueDetailsPage = new IssueDetailsPage();
 	private ViewIssuePage viewIssuePage = new ViewIssuePage();
+	private ChangeLogPage changeLogPage = new ChangeLogPage();
+	private RoadMapPage roadMapPage = new RoadMapPage();
 
 	@Test
 	@Order(1)
@@ -43,7 +47,7 @@ public class MantisAutomationTest extends BaseTest {
 		loginPage.clickOnLoginBtn();
 
 		// Wait until element appears
-		loginPage.waitHomePageLoaded();
+		Assertions.assertTrue(loginPage.waitHomePageLoaded());
 
 
 	}
@@ -55,6 +59,7 @@ public class MantisAutomationTest extends BaseTest {
 		test01_loginSucess();
 		homePage.clickOnUserInfo();
 		homePage.clickOnLogoutButton();
+		
 		Assertions.assertTrue(loginPage.isLoginPage());
 		
 	}
@@ -69,6 +74,8 @@ public class MantisAutomationTest extends BaseTest {
 		issueDetailsPage.enterSumary();
 		issueDetailsPage.enterDescription();
 		issueDetailsPage.clickOnSubmitButton();
+		
+		Assertions.assertEquals("View Issue Details", viewIssuePage.getTittleViewIssueDetails());
 		
 	}
 	
@@ -103,12 +110,46 @@ public class MantisAutomationTest extends BaseTest {
 		viewIssuePage.clickOnExcelReports();
 	}
 	
-	// add issue
-	// clone issue
-	//Negative testing
-	// submmit issue without fill out required fieldsLoginPage
-	// attach tags without fill out Separate by field
-	// send note without fill out Note field
+	@Test
+	@Order(7)
+	public void test07_invalidLogin() {
+		
+		// Fill usernameField
+		loginPage.enterUsername("invalidLogin");
+		
+		// Click on Login Button
+		loginPage.clickOnLoginBtn();
+		
 
+		loginPage.enterPassword(password);
+		
+		// Click on Login Button
+		loginPage.clickOnLoginBtn();
+		
+		Assertions.assertEquals("Your account may be disabled or blocked or the username/password you entered is incorrect.", loginPage.getLoginMsgError());
+		
+		
+	}
+	
+	@Test
+	@Order(8)
+	public void test08_changeLog()throws InterruptedException {
+		
+		test01_loginSucess();
+		homePage.clickOnChangeLogButton();
+		Assertions.assertEquals("No Change Log information available", changeLogPage.getInformationPage());
+		
+	}
+	
+	@Test
+	@Order(9)
+	public void test09_roadmap()throws InterruptedException {
+		
+		test01_loginSucess();
+		homePage.clickOnRoadmapButton();
+		Assertions.assertEquals("No Roadmap information available", roadMapPage.getInformationPage());
+		
+	}
+	
 
 }

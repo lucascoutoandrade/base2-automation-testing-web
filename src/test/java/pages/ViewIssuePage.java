@@ -19,6 +19,11 @@ public class ViewIssuePage extends BasePage {
 	
 	@FindBy(xpath = "//div[@class='center']")
 	WebElement tittlePrint;
+	
+	@FindBy(css = "div.widget-box:nth-child(1) > div:nth-child(1) > h4")
+	WebElement tittleViewIssueDetails;
+	
+	
 
 	public ViewIssuePage() {
 
@@ -43,7 +48,12 @@ public class ViewIssuePage extends BasePage {
 		
 		return tittlePrint.getText();
 		
+	}
+	
+	public String getTittleViewIssueDetails() {
 		
+		
+		return tittleViewIssueDetails.getText();
 	}
 
 }
