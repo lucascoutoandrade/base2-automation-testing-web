@@ -1,22 +1,33 @@
-Teste Técnico Base2 Sobre Automação de Testes WEB
+# Teste Técnico Base2 testes de WEB
 
-Como executar os testes:
+Este projeto foi elaborado pensando em garantir uma cobertura de testes para o sistema Mantis.
 
-É Possivel executar pela propria IDE, selecionado qual Teste deseja executar e simplismente dar play no método
-do teste ou podera executar pela linha de comando atraves do comando:
+##  Requisitos
+* Java 11+ JDK deve estar instalado
+* Maven deve estar instalado e configurado no path da aplicação
+* Allure report deve estar instalado e configurado na máquina
 
-Rodar todos os testes
+## Como executar os testes
+É Possivel executar pela propria IDE, selecionado qual Teste deseja executar e simplismente dar play no método <br>
+do teste ou podera executar pela linha de comando atraves do comando:<br>
 
-mvn test  
+Rodar todos os testes<br>
+```bash
+mvn test 
+```
+Rodar teste especifico utilizando o nome do método<br>
+```bash
+mvn test -Dtest="MantisAutomationTest#test01_loginSucess"
+```
 
-Allure
+## Como startar o allure server
+Executar o comando abaixo:<br>
+allure serve /path/to/project/target/surefire-reports/
 
-Após a execução dos testes é possivel gerar o relatório com a biblioteca Allure Local.
+## O que foi entregue?
+* Testes funcionais (Positivos e negativos)
+* Report com allure report e log (log4j)
 
-Para visualizar o relatório:
 
-Local: Basta executar o comando na pasta do projeto:
 
-allure:serve
 
-allure open /home/user/myproject/build/allure-report
