@@ -121,43 +121,64 @@ public class DriverFactory {
 		// Operating system is based on Linux/Unix/*AIX
 		if (osName.contains("linux") || osName.contains("unix") || osName.contains("aix")) {
 
-			setSetupDriver();
+			switch (driverName.toLowerCase()) {
+
+			case "chrome":
+				WebDriverManager.chromedriver().operatingSystem(OperatingSystem.LINUX).setup();
+				break;
+			case "firefox":
+				WebDriverManager.firefoxdriver().operatingSystem(OperatingSystem.LINUX).setup();
+				break;
+			case "ie":
+				WebDriverManager.iedriver().operatingSystem(OperatingSystem.LINUX).setup();
+				break;
+
+			default:
+				log.warning(">>>>>>> Warning browser not available! <<<<<<<<<<");
+
+			}
 			// Operating system is Apple OSX based
 		} else if (osName.contains("mac") || osName.contains("osx")) {
 
-			setSetupDriver();
+			switch (driverName.toLowerCase()) {
+
+			case "chrome":
+				WebDriverManager.chromedriver().operatingSystem(OperatingSystem.MAC).setup();
+				break;
+			case "firefox":
+				WebDriverManager.firefoxdriver().operatingSystem(OperatingSystem.MAC).setup();
+				break;
+			case "ie":
+				WebDriverManager.iedriver().operatingSystem(OperatingSystem.MAC).setup();
+				break;
+
+			default:
+				log.warning(">>>>>>> Warning browser not available! <<<<<<<<<<");
+
+			}
 			// Operating system is based on Windows
 		} else {
 
-			setSetupDriver();
+			switch (driverName.toLowerCase()) {
+
+			case "chrome":
+				WebDriverManager.chromedriver().operatingSystem(OperatingSystem.WIN).setup();
+				break;
+			case "firefox":
+				WebDriverManager.firefoxdriver().operatingSystem(OperatingSystem.WIN).setup();
+				break;
+			case "ie":
+				WebDriverManager.iedriver().operatingSystem(OperatingSystem.WIN).setup();
+				break;
+
+			default:
+				log.warning(">>>>>>> Warning browser not available! <<<<<<<<<<");
+
+			}
 		}
 
 	}
 
-	/**
-	 * Setup driver
-	 */
-
-	private static void setSetupDriver() {
-
-		switch (driverName.toLowerCase()) {
-
-		case "chrome":
-			WebDriverManager.chromedriver().operatingSystem(OperatingSystem.LINUX).setup();
-			break;
-		case "firefox":
-			WebDriverManager.firefoxdriver().operatingSystem(OperatingSystem.LINUX).setup();
-			break;
-		case "ie":
-			WebDriverManager.iedriver().operatingSystem(OperatingSystem.LINUX).setup();
-			break;
-
-		default:
-			log.warning(">>>>>>> Warning browser not available! <<<<<<<<<<");
-
-		}
-
-	}
 
 	/**
 	 * Define browser
